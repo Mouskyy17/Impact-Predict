@@ -13,7 +13,8 @@ st.set_page_config(page_title="Player Impact Analysis", layout="wide")
 @st.cache_data
 def load_data():
     df = pd.read_csv("df_Big5.csv")
-    
+    df = df[df['Pourcentage de minutes jouees'] > 60]
+
     # Nettoyage des données
     df = df[df['Ligue'].isin(['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1'])]
     df['Position'] = df['Position'].replace({
