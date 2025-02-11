@@ -31,7 +31,6 @@ def load_data():
     'Buts', 'Passes decisives', 'Tacles reussis', 'Interceptions', 
     'Duels aeriens gagnes', 'Courses progressives', 'Ballons recuperes',
     'Passes progressives',  # Ajouté
-    'xG',
 ]
     for stat in stats:
         df[f'{stat} par 90'] = per90(df[stat], df['Minutes jouees'])
