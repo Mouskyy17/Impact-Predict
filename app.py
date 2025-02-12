@@ -140,7 +140,7 @@ def main():
         
         for i, position in enumerate(positions):
             with cols[i]:
-                st.subheader(f"Top 5 {position}s")
+                st.subheader(f"Top 5 {position}")
                 pos_df = filtered_df[filtered_df['Position'] == position] \
                     .sort_values('Impact Score', ascending=False) \
                     .head(5)
