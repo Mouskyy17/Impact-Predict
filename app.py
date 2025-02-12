@@ -103,72 +103,81 @@ def calculate_impact_scores(df):
 def main():
     st.title("🔝 Analyse d'Impact des Joueurs - Top 5 Championnats 🔝")
     
-    # Sidebar - Sélection du championnat
-    league = st.sidebar.selectbox(
-        'Sélectionnez un championnat',
-        ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1']
-    )
-    
+    # Sidebar - Sélections
+    with st.sidebar:
+        # Sélection du championnat
+        league = st.selectbox(
+            'Sélectionnez un championnat',
+            ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1']
+        )
+        
+        # Options d'affichage
+        st.markdown("---")
+        show_top5 = st.checkbox("Afficher les Top 5 par position", value=True)
+        enable_comparison = st.checkbox("Activer la comparaison de joueurs", value=False)
+        
+        # Comparaison de joueurs (seulement si activé)
+        selected_players = []
+        if enable_comparison:
+            st.markdown("## Comparaison de Joueurs")
+            df_scored = calculate_impact_scores(df)
+            filtered_df = df_scored[df_scored['Ligue'] == league]
+            players_list = filtered_df['Joueur'].unique().tolist()
+            selected_players = st.multiselect(
+                'Choisissez 2 joueurs à comparer',
+                players_list,
+                max_selections=2
+            )
+
     # Calcul des scores
     df_scored = calculate_impact_scores(df)
-    
-    # Filtrage par championnat
     filtered_df = df_scored[df_scored['Ligue'] == league]
     
-    # Nouvelle section de comparaison
-    st.sidebar.markdown("## Comparaison de Joueurs")
-    players_list = filtered_df['Joueur'].unique().tolist()
-    selected_players = st.sidebar.multiselect(
-        'Choisissez 2 joueurs à comparer',
-        players_list,
-        max_selections=2
-    )
-    
-    # Affichage des top 5 par position
-    positions = ['Attaquant', 'Milieu', 'Défenseur']
-    cols = st.columns(3)
-    
-    for i, position in enumerate(positions):
-        with cols[i]:
-            st.subheader(f"Top 5 {position}s")
-            pos_df = filtered_df[filtered_df['Position'] == position] \
-                .sort_values('Impact Score', ascending=False) \
-                .head(5)
-            
-            for _, row in pos_df.iterrows():
-                with st.expander(f"{row['Joueur']} ({row['Equipe']}, {int(row['Age'])})"):
-                    st.metric("Score d'Impact", f"{row['Impact Score']:.2f}")
-                    
-                    # Radar chart
-                    features = position_config[position]['features']
-                    scaled_features = [f'Scaled {f}' for f in features]
-                    
-                    fig = go.Figure()
-                    fig.add_trace(go.Scatterpolar(
-                        r=row[scaled_features].values,
-                        theta=features,
-                        fill='toself',
-                        line_color='blue'
-                    ))
-                    
-                    fig.update_layout(
-                        polar=dict(
-                            radialaxis=dict(
-                                visible=True,
-                                range=[-3, 3]
-                            )),
-                        showlegend=False,
-                        height=300,
-                        width=300
-                    )
-                    
-                    st.plotly_chart(fig, use_container_width=True)
+    # Affichage des top 5 par position (seulement si activé)
+    if show_top5:
+        positions = ['Attaquant', 'Milieu', 'Défenseur']
+        cols = st.columns(3)
+        
+        for i, position in enumerate(positions):
+            with cols[i]:
+                st.subheader(f"Top 5 {position}s")
+                pos_df = filtered_df[filtered_df['Position'] == position] \
+                    .sort_values('Impact Score', ascending=False) \
+                    .head(5)
+                
+                for _, row in pos_df.iterrows():
+                    with st.expander(f"{row['Joueur']} ({row['Equipe']}, {int(row['Age'])})"):
+                        st.metric("Score d'Impact", f"{row['Impact Score']:.2f}")
+                        
+                        # Radar chart
+                        features = position_config[position]['features']
+                        scaled_features = [f'Scaled {f}' for f in features]
+                        
+                        fig = go.Figure()
+                        fig.add_trace(go.Scatterpolar(
+                            r=row[scaled_features].values,
+                            theta=features,
+                            fill='toself',
+                            line_color='blue'
+                        ))
+                        
+                        fig.update_layout(
+                            polar=dict(
+                                radialaxis=dict(
+                                    visible=True,
+                                    range=[-3, 3]
+                                )),
+                            showlegend=False,
+                            height=300,
+                            width=300
+                        )
+                        
+                        st.plotly_chart(fig, use_container_width=True)
 
-    # Section de comparaison
-    if len(selected_players) == 2:
+    # Section de comparaison (seulement si activé et 2 joueurs sélectionnés)
+    if enable_comparison and len(selected_players) == 2:
         st.markdown("---")
         st.subheader("🔍 Comparaison côte à côte")
-        
         # Récupération des données des joueurs
         player1 = filtered_df[filtered_df['Joueur'] == selected_players[0]].iloc[0]
         player2 = filtered_df[filtered_df['Joueur'] == selected_players[1]].iloc[0]
