@@ -34,7 +34,7 @@ def load_data():
     'Duels aeriens gagnes', 'Courses progressives', 'Ballons recuperes',
     'Passes progressives', 'Dribbles reussis', 'Passes cles',
     'Tirs cadres', 'Touches de balle surface offensive', 'Degagements',
-    'Fautes commises', 'Passes longues reussies', 'Pourcentage passes reussies'
+    'Fautes commises', 'Passes longues reussies', 'Pourcentage de passes reussies'
 ]
     for stat in stats:
         df[f'{stat} par 90'] = per90(df[stat], df['Minutes jouees'])
