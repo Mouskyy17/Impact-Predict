@@ -30,7 +30,7 @@ def load_data():
     
     stats = [
     'Buts', 'Passes decisives', 'Passes decisives attendues (xAG)',
-    'Tacles reussis', 'Interceptions', 'Erreurs menant a tir',
+    'Tacles reussis', 'Interceptions', 'Erreurs menant a un tir',
     'Duels aeriens gagnes', 'Courses progressives', 'Ballons recuperes',
     'Passes progressives', 'Dribbles reussis', 'Passes cles',
     'Tirs cadres', 'Touches balle surface offensive', 'Degagements',
