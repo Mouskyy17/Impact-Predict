@@ -12,7 +12,7 @@ st.set_page_config(page_title="Player Impact Analysis", layout="wide")
 # Fonction de chargement des données
 @st.cache_data
 def load_data():
-    df = pd.read_csv("df_Big5.csv")
+    df = pd.read_csv("df_Big2025.csv")
     df = df[df['Pourcentage de minutes jouees'] > 60]
 
     # Nettoyage des données
