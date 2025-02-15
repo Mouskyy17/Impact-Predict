@@ -34,7 +34,7 @@ def load_data():
     'Duels aeriens gagnes', 'Courses progressives', 'Ballons recuperes',
     'Passes progressives', 'Dribbles reussis', 'Passes cles',
     'Tirs cadres', 'Touches de balle surface offensive', 'Degagements',
-    'Fautes', 'Passes longues reussies', 'Pourcentage passes reussies'
+    'Fautes commises', 'Passes longues reussies', 'Pourcentage passes reussies'
 ]
     for stat in stats:
         df[f'{stat} par 90'] = per90(df[stat], df['Minutes jouees'])
@@ -85,7 +85,7 @@ position_config = {
             'Passes progressives par 90',
             'Pourcentage passes reussies par 90',
             'Degagements par 90',
-            'Fautes par 90',
+            'Fautes commises par 90',
             'Passes longues reussies par 90',
             'Erreurs menant a tir par 90'
         ],
