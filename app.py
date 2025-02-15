@@ -29,9 +29,12 @@ def load_data():
         return (col / minutes) * 90
     
     stats = [
-    'Buts', 'Passes decisives', 'Tacles reussis', 'Interceptions', 
+    'Buts', 'Passes decisives', 'Passes decisives attendues (xAG)',
+    'Tacles reussis', 'Interceptions', 'Erreurs menant a tir'
     'Duels aeriens gagnes', 'Courses progressives', 'Ballons recuperes',
-    'Passes progressives', 'Passes reussies totales', # Ajouté
+    'Passes progressives', 'Dribbles reussis', 'Passes cles',
+    'Tirs cadres', 'Touches balle surface offensive', 'Degagements',
+    'Fautes', 'Passes longues reussies', 'Pourcentage passes reussies'
 ]
     for stat in stats:
         df[f'{stat} par 90'] = per90(df[stat], df['Minutes jouees'])
@@ -41,27 +44,37 @@ def load_data():
 # Chargement des données
 df = load_data()
 
-# Configuration des caractéristiques par position
+# Configuration des caractéristiques par position (10 variables)
 position_config = {
     'Attaquant': {
         'features': [
             'Buts par 90',
             'Passes decisives par 90',
             'xG par 90 minutes',
-            'Dribbles reussis',
-            'Courses progressives par 90'
+            'Dribbles reussis par 90',
+            'Courses progressives par 90',
+            'Tirs cadres par 90 minutes',
+            'Passes cles par 90',
+            'Duels gagnes par 90',
+            'Touches balle surface offensive par 90',
+            'xAG par 90 minutes'
         ],
-        'weights': [0.3, 0.25, 0.25, 0.1, 0.1]
+        'weights': [0.18, 0.15, 0.15, 0.12, 0.10, 0.10, 0.08, 0.06, 0.04, 0.02]
     },
     'Milieu': {
         'features': [
-            'Passes decisives par 90',
             'Passes progressives par 90',
-            'Tacles reussis par 90',
+            'Passes decisives par 90',
+            'Ballons recuperes par 90',
             'Interceptions par 90',
-            'xG + xAG par 90 minutes'
+            'Dribbles reussis par 90',
+            'Buts et passes attendus par 90 minutes',
+            'Passes dans dernier tiers par 90',
+            'Duels aeriens gagnes par 90',
+            'Courses progressives par 90',
+            'Pourcentage passes reussies par 90'
         ],
-        'weights': [0.25, 0.25, 0.2, 0.2, 0.1]
+        'weights': [0.15, 0.15, 0.13, 0.12, 0.10, 0.10, 0.08, 0.07, 0.06, 0.04]
     },
     'Défenseur': {
         'features': [
@@ -69,9 +82,14 @@ position_config = {
             'Interceptions par 90',
             'Duels aeriens gagnes par 90',
             'Ballons recuperes par 90',
-            'Passes reussies totales par 90'
+            'Passes progressives par 90',
+            'Pourcentage passes reussies par 90',
+            'Degagements par 90',
+            'Fautes par 90',
+            'Passes longues reussies par 90',
+            'Erreurs menant a tir par 90'
         ],
-        'weights': [0.3, 0.3, 0.2, 0.1, 0.1]
+        'weights': [0.20, 0.18, 0.15, 0.12, 0.10, 0.08, 0.07, 0.05, 0.03, 0.02]
     }
 }
 
