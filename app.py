@@ -32,7 +32,7 @@ def load_data():
     'Buts', 'Passes decisives', 'Passes decisives attendues (xAG)',
     'Tacles reussis', 'Interceptions', 'Erreurs menant a un tir',
     'Duels aeriens gagnes', 'Courses progressives', 'Ballons recuperes',
-    'Passes progressives', 'Dribbles reussis', 'Passes cles',
+    'Passes progressives', 'Dribbles reussis', 'Passes cles', 'Pourcentage de duels gagnes'
     'Tirs cadres', 'Touches de balle surface offensive', 'Degagements',
     'Fautes commises', 'Passes longues reussies', 'Pourcentage de passes reussies'
 ]
@@ -50,13 +50,13 @@ position_config = {
         'features': [
             'Buts par 90',
             'Passes decisives par 90',
-            'xG par 90 minutes',
+            'Buts attendus par 90 minutes',
             'Dribbles reussis par 90',
             'Courses progressives par 90',
             'Tirs cadres par 90 minutes',
             'Passes cles par 90',
-            'Duels gagnes par 90',
-            'Touches balle surface offensive par 90',
+            'Pourcentage de duels gagnes par 90',
+            'Touches de balle surface offensive par 90',
             'Passes decisives attendues par 90 minutes'
         ],
         'weights': [0.18, 0.15, 0.15, 0.12, 0.10, 0.10, 0.08, 0.06, 0.04, 0.02]
