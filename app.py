@@ -32,7 +32,7 @@ def load_data():
     'Buts', 'Passes decisives', 'Passes decisives attendues (xAG)',
     'Tacles reussis', 'Interceptions', 'Erreurs menant a un tir',
     'Duels aeriens gagnes', 'Courses progressives', 'Ballons recuperes',
-    'Passes progressives', 'Dribbles reussis', 'Passes cles', 'Passes dans le dernier tiers'
+    'Passes progressives', 'Dribbles reussis', 'Passes cles', 'Passes dans le dernier tiers',
     'Pourcentage de duels gagnes', 'Touches de balle surface offensive', 'Degagements',
     'Fautes commises', 'Passes longues reussies', 'Pourcentage de passes reussies'
 ]
