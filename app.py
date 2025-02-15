@@ -87,7 +87,7 @@ position_config = {
             'Degagements par 90',
             'Fautes commises par 90',
             'Passes longues reussies par 90',
-            'Erreurs menant a tir par 90'
+            'Erreurs menant a un tir par 90'
         ],
         'weights': [0.20, 0.18, 0.15, 0.12, 0.10, 0.08, 0.07, 0.05, 0.03, 0.02]
     }
