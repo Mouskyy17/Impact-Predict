@@ -208,20 +208,62 @@ def main():
 
         # Création des colonnes pour les métriques
         col1, col2 = st.columns(2)
-    
-        # Joueur 1
+
         with col1:
             st.markdown(f"### {player1['Joueur']}")
             st.write(f"**Équipe:** {player1['Equipe']} ({player1['Ligue']})")
             st.write(f"**Âge:** {int(player1['Age'])}")
-            st.metric("Score d'Impact", f"{player1['Impact Score']:.2f}")
+    
+        # Création de la jauge
+        fig_gauge1 = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=player1['Impact Score'],
+            domain={'x': [0, 1], 'y': [0, 1]},
+            title={'text': "Score d'Impact"},
+            gauge={
+                'axis': {'range': [None, 10]},
+                'bar': {'color': "#1f77b4"},
+                'steps': [
+                    {'range': [0, 4], 'color': "lightgray"},
+                    {'range': [4, 7], 'color': "gray"},
+                    {'range': [7, 10], 'color': "darkgray"}
+                ],
+                'threshold': {
+                    'line': {'color': "red", 'width': 4},
+                    'thickness': 0.75,
+                    'value': player1['Impact Score']}
+            }
+        ))
+        fig_gauge1.update_layout(height=200, margin=dict(t=50, b=10))
+        st.plotly_chart(fig_gauge1, use_container_width=True)
 
-        # Joueur 2
         with col2:
             st.markdown(f"### {player2['Joueur']}")
             st.write(f"**Équipe:** {player2['Equipe']} ({player2['Ligue']})")
             st.write(f"**Âge:** {int(player2['Age'])}")
-            st.metric("Score d'Impact", f"{player2['Impact Score']:.2f}")
+    
+        # Jauge pour le deuxième joueur
+        fig_gauge2 = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=player2['Impact Score'],
+            domain={'x': [0, 1], 'y': [0, 1]},
+            title={'text': "Score d'Impact"},
+            gauge={
+                'axis': {'range': [None, 10]},
+                'bar': {'color': "#ff7f0e"},
+                'steps': [
+                    {'range': [0, 4], 'color': "lightgray"},
+                    {'range': [4, 7], 'color': "gray"},
+                    {'range': [7, 10], 'color': "darkgray"}
+                ],
+                'threshold': {
+                    'line': {'color': "red", 'width': 4},
+                    'thickness': 0.75,
+                    'value': player2['Impact Score']}
+            }
+        ))
+        fig_gauge2.update_layout(height=200, margin=dict(t=50, b=10))
+        st.plotly_chart(fig_gauge2, use_container_width=True)
 
         # Création du radar chart combiné
         position = player1['Position']
