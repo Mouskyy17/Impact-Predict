@@ -240,6 +240,8 @@ def main():
             st.markdown(f"### {player1['Joueur']}")
             st.write(f"**Équipe:** {player1['Equipe']} ({player1['Ligue']})")
             st.write(f"**Âge:** {int(player1['Age'])}")
+            st.metric("Score d'Impact", f"{player1['Impact Score']:.2f}")
+
     
             # Jauge pour le score d'impact
             score = player1['Impact Score']
@@ -256,6 +258,8 @@ def main():
             st.markdown(f"### {player2['Joueur']}")
             st.write(f"**Équipe:** {player2['Equipe']} ({player2['Ligue']})")
             st.write(f"**Âge:** {int(player2['Age'])}")
+            st.metric("Score d'Impact", f"{player2['Impact Score']:.2f}")
+
     
             # Jauge pour le score d'impact
             score = player2['Impact Score']
@@ -267,6 +271,8 @@ def main():
                 </div>
             </div>
             """, unsafe_allow_html=True)
+            #st.metric("Score d'Impact", f"{player2['Impact Score']:.2f}")
+
 
         # Création du radar chart combiné
         position = player1['Position']
