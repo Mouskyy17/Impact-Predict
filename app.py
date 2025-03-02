@@ -192,70 +192,84 @@ def main():
                         
                         st.plotly_chart(fig, use_container_width=True)
 
-    # Section de comparaison (seulement si activé et 2 joueurs sélectionnés)
+    # Section de comparaison modifiée avec radar unique
     if enable_comparison and len(selected_players) == 2:
         st.markdown("---")
         st.subheader("🔍 Comparaison côte à côte")
+    
         # Récupération des données des joueurs
-        player1 = filtered_df[filtered_df['Joueur'] == selected_players[0]].iloc[0]
-        player2 = filtered_df[filtered_df['Joueur'] == selected_players[1]].iloc[0]
-        
-        # Création des colonnes pour l'affichage
+        player1 = df_scored[df_scored['Joueur'] == selected_players[0]].iloc[0]
+        player2 = df_scored[df_scored['Joueur'] == selected_players[1]].iloc[0]
+
+        # Vérification du même poste
+        if player1['Position'] != player2['Position']:
+            st.error("Les joueurs doivent avoir le même poste pour être comparés !")
+            st.stop()
+
+        # Création des colonnes pour les métriques
         col1, col2 = st.columns(2)
-        
+    
         # Joueur 1
         with col1:
             st.markdown(f"### {player1['Joueur']}")
-            st.write(f"**Équipe:** {player1['Equipe']}")
+            st.write(f"**Équipe:** {player1['Equipe']} ({player1['Ligue']})")
             st.write(f"**Âge:** {int(player1['Age'])}")
-            st.write(f"**Position:** {player1['Position']}")
             st.metric("Score d'Impact", f"{player1['Impact Score']:.2f}")
-            
-            # Radar chart
-            features = position_config[player1['Position']]['features']
-            scaled_features = [f'Scaled {f}' for f in features]
-            
-            fig = go.Figure()
-            fig.add_trace(go.Scatterpolar(
-                r=player1[scaled_features].values,
-                theta=features,
-                fill='toself',
-                line_color='blue',
-                name=player1['Joueur']
-            ))
-            fig.update_layout(
-                polar=dict(radialaxis=dict(visible=True, range=[-3, 3])),
-                showlegend=False,
-                height=400
-            )
-            st.plotly_chart(fig, use_container_width=True)
 
         # Joueur 2
         with col2:
             st.markdown(f"### {player2['Joueur']}")
-            st.write(f"**Équipe:** {player2['Equipe']}")
+            st.write(f"**Équipe:** {player2['Equipe']} ({player2['Ligue']})")
             st.write(f"**Âge:** {int(player2['Age'])}")
-            st.write(f"**Position:** {player2['Position']}")
             st.metric("Score d'Impact", f"{player2['Impact Score']:.2f}")
-            
-            # Radar chart
-            features = position_config[player2['Position']]['features']
-            scaled_features = [f'Scaled {f}' for f in features]
-            
-            fig = go.Figure()
-            fig.add_trace(go.Scatterpolar(
-                r=player2[scaled_features].values,
-                theta=features,
-                fill='toself',
-                line_color='red',
-                name=player2['Joueur']
-            ))
-            fig.update_layout(
-                polar=dict(radialaxis=dict(visible=True, range=[-3, 3])),
-                showlegend=False,
-                height=400
-            )
-            st.plotly_chart(fig, use_container_width=True)
+
+        # Création du radar chart combiné
+        position = player1['Position']
+        features = position_config[position]['features']
+        scaled_features = [f'Scaled {f}' for f in features]
+
+        fig = go.Figure()
+    
+        # Trace pour le joueur 1
+        fig.add_trace(go.Scatterpolar(
+            r=player1[scaled_features].values,
+            theta=features,
+            name=player1['Joueur'],
+            fill='toself',
+            line_color='#1f77b4'  # Bleu
+        ))
+    
+        # Trace pour le joueur 2
+        fig.add_trace(go.Scatterpolar(
+            r=player2[scaled_features].values,
+            theta=features,
+            name=player2['Joueur'],
+            fill='toself',
+            line_color='#ff7f0e'  # Orange
+        ))
+
+        # Mise en forme du radar
+        fig.update_layout(
+            polar=dict(
+                radialaxis=dict(
+                    visible=True,
+                    range=[-3, 3],
+                    tickfont=dict(size=8)
+            )),
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.1,
+                xanchor="center",
+                x=0.5
+            ),
+            margin=dict(l=50, r=50, t=50, b=50),
+            height=500
+        )
+
+        # Affichage du radar
+        st.markdown("### 📊 Profil comparé (par 90 minutes)")
+        st.plotly_chart(fig, use_container_width=True)
 
         # Tableau comparatif
         st.markdown("### 📊 Comparaison détaillée")
