@@ -253,98 +253,18 @@ def main():
         # Création des colonnes pour les métriques
         col1, col2 = st.columns(2)
     
-        # Ajoutez ce style CSS dans la section de comparaison
-        st.markdown("""
-        <style>
-            .impact-gauge {
-                width: 100%;
-            height: 25px;
-            background-color: #e0e0e0;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            margin: 10px 0;
-            }
-    
-            .gauge-fill {
-                height: 100%;
-                border-radius: 12px;
-                transition: all 0.5s ease-in-out;
-                position: absolute;
-                left: 0;
-                top: 0;
-            }
-    
-            .gauge-label {
-                position: absolute;
-                right: 10px;
-                top: 50%;
-                transform: translateY(-50%);
-                color: white;
-                font-weight: bold;
-                text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            }
-    
-            .gauge-scale {
-                display: flex;
-                justify-content: space-between;
-                font-size: 0.8em;
-                color: #666;
-                margin-top: 5px;
-            }
-        </style>
-        """, unsafe_allow_html=True)
-
         # Modifiez les sections des joueurs comme ceci :
         with col1:
             st.markdown(f"### {player1['Joueur']}")
             st.write(f"**Équipe:** {player1['Equipe']} ({player1['Ligue']})")
             st.write(f"**Âge:** {int(player1['Age'])}")
             st.metric("Score d'Impact", f"{player1['Impact Score']:.2f}")
-    
-            # Calcul dynamique de la jauge
-            min_score = -3
-            max_score = 3
-            score = player1['Impact Score']
-            percentage = ((score - min_score) / (max_score - min_score)) * 100
-    
-            st.markdown(f"""
-            <div class="impact-gauge">
-                <div class="gauge-fill" style="width: {percentage}%; background: linear-gradient(90deg, #1f77b4 0%, #4a90e2 100%);">
-                    <span class="gauge-label">{score:.2f}</span>
-                </div>
-            </div>
-            <div class="gauge-scale">
-                <span>{min_score}</span>
-                <span>0</span>
-                <span>{max_score}</span>
-            </div>
-            """, unsafe_allow_html=True)
-
+            
         with col2:
             st.markdown(f"### {player2['Joueur']}")
             st.write(f"**Équipe:** {player2['Equipe']} ({player2['Ligue']})")
             st.write(f"**Âge:** {int(player2['Age'])}")
             st.metric("Score d'Impact", f"{player2['Impact Score']:.2f}")
-    
-            # Calcul dynamique de la jauge
-            score = player2['Impact Score']
-            percentage = ((score - min_score) / (max_score - min_score)) * 100
-    
-            st.markdown(f"""
-            <div class="impact-gauge">
-                <div class="gauge-fill" style="width: {percentage}%; background: linear-gradient(90deg, #ff7f0e 0%, #ffa726 100%);">
-                    <span class="gauge-label">{score:.2f}</span>
-                </div>
-            </div>
-            <div class="gauge-scale">
-                <span>{min_score}</span>
-                <span>0</span>
-                <span>{max_score}</span>
-            </div>
-            """, unsafe_allow_html=True)
-            #st.metric("Score d'Impact", f"{player2['Impact Score']:.2f}")
-
 
         # Création du radar chart combiné
         position = player1['Position']
