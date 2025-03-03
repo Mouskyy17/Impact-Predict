@@ -230,17 +230,16 @@ def main():
         st.subheader("🔍 Comparaison Joueurs")
     
         # Récupération des données des joueurs
-        if enable_comparison and len(selected_players) == 2:
-            player1 = df_scored[
-                (df_scored['Joueur'] == selected_players[0]) & 
-                (df_scored['Ligue'] == selected_leagues[0])
-            ].iloc[0]
+        player1 = df_scored[
+            (df_scored['Joueur'] == selected_players[0]) & 
+            (df_scored['Ligue'] == selected_leagues[0])
+        ].iloc[0]
         
-            player2 = df_scored[
-                (df_scored['Joueur'] == selected_players[1]) & 
-                (df_scored['Ligue'] == selected_leagues[1])
-            ].iloc[0]
-            
+        player2 = df_scored[
+            (df_scored['Joueur'] == selected_players[1]) & 
+            (df_scored['Ligue'] == selected_leagues[1])
+        ].iloc[0]
+
         # Vérification du même poste
         if player1['Position'] != player2['Position']:
             st.error("Les joueurs doivent avoir le même poste pour être comparés !")
