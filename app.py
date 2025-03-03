@@ -240,10 +240,10 @@ def main():
             (df_scored['Ligue'] == selected_leagues[1])
         ].iloc[0]
 
-        # Vérification du même poste
-        if player1['Position'] != player2['Position']:
-            st.error("Les joueurs doivent avoir le même poste pour être comparés !")
-            st.stop()
+#        # Vérification du même poste
+#        if player1['Position'] != player2['Position']:
+#            st.error("Les joueurs doivent avoir le même poste pour être comparés !")
+#            st.stop()
 
         # Création des colonnes pour les métriques
         col1, col2 = st.columns(2)
