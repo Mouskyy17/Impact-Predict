@@ -354,8 +354,8 @@ def main():
         # Création du radar avec soccerplots
         params = features
         values = [
-        player1[scaled_features].values.tolist(),
-        player2[scaled_features].values.tolist()
+            player1[scaled_features].values.tolist(),
+            player2[scaled_features].values.tolist()
         ]
 
         radar = Radar()
@@ -370,7 +370,7 @@ def main():
             show_legend=True,
             legend_loc="upper right",
             figsize=(8, 8)
-    )
+        )
 
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
         plt.tight_layout()
