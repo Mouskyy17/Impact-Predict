@@ -359,7 +359,7 @@ def main():
         ]
 
         radar = Radar()
-        fig, ax = radar.plot_radar(
+        fig = radar.plot_radar(
             ranges=[(0, 100)] * len(params),
             params=params,
             values=values,
