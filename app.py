@@ -134,18 +134,50 @@ def main():
         show_top5 = st.checkbox("Afficher les Top 5 par position", value=True)
         enable_comparison = st.checkbox("Activer la comparaison de joueurs", value=False)
         
-        # Comparaison de joueurs (seulement si activé)
-        selected_players = []
+        # Comparaison de joueurs (nouvelle version)
         if enable_comparison:
             st.markdown("## Comparaison de Joueurs")
-            df_scored = calculate_impact_scores(df)
-            filtered_df = df_scored[df_scored['Ligue'] == league]
-            players_list = filtered_df['Joueur'].unique().tolist()
-            selected_players = st.multiselect(
-                'Choisissez 2 joueurs à comparer',
-                players_list,
-                max_selections=2
+            
+            # Sélection de la position commune
+            selected_position = st.selectbox(
+                'Sélectionnez la position',
+                ['Attaquant', 'Milieu', 'Défenseur']
             )
+            
+            # Sélection des joueurs avec championnat individuel
+            selected_players = []
+            selected_leagues = []
+            
+            cols = st.columns(2)
+            with cols[0]:
+                st.markdown("**Joueur 1**")
+                league1 = st.selectbox(
+                    'Championnat 1',
+                    ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1'],
+                    key='league1'
+                )
+                players1 = df_scored[
+                    (df_scored['Position'] == selected_position) & 
+                    (df_scored['Ligue'] == league1)
+                ]['Joueur'].unique()
+                player1 = st.selectbox('Sélection', players1, key='player1')
+                selected_players.append(player1)
+                selected_leagues.append(league1)
+
+            with cols[1]:
+                st.markdown("**Joueur 2**")
+                league2 = st.selectbox(
+                    'Championnat 2',
+                    ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1'],
+                    key='league2'
+                )
+                players2 = df_scored[
+                    (df_scored['Position'] == selected_position) & 
+                    (df_scored['Ligue'] == league2)
+                ]['Joueur'].unique()
+                player2 = st.selectbox('Sélection', players2, key='player2')
+                selected_players.append(player2)
+                selected_leagues.append(league2)
 
     # Calcul des scores
     df_scored = calculate_impact_scores(df)
@@ -195,12 +227,20 @@ def main():
     # Section de comparaison modifiée avec radar unique
     if enable_comparison and len(selected_players) == 2:
         st.markdown("---")
-        st.subheader("🔍 Comparaison côte à côte")
+        st.subheader("🔍 Comparaison Joueurs")
     
         # Récupération des données des joueurs
-        player1 = df_scored[df_scored['Joueur'] == selected_players[0]].iloc[0]
-        player2 = df_scored[df_scored['Joueur'] == selected_players[1]].iloc[0]
-
+        if enable_comparison and len(selected_players) == 2:
+            player1 = df_scored[
+                (df_scored['Joueur'] == selected_players[0]) & 
+                (df_scored['Ligue'] == selected_leagues[0])
+            ].iloc[0]
+        
+            player2 = df_scored[
+                (df_scored['Joueur'] == selected_players[1]) & 
+                (df_scored['Ligue'] == selected_leagues[1])
+            ].iloc[0]
+            
         # Vérification du même poste
         if player1['Position'] != player2['Position']:
             st.error("Les joueurs doivent avoir le même poste pour être comparés !")
