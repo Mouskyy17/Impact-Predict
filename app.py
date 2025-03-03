@@ -360,13 +360,13 @@ def main():
 
         radar = Radar()
         fig, ax = radar.plot_radar(
+            ranges=[(0, 100)] * len(params),
             params=params,
             values=values,
             title="Profil comparé (par 90 minutes)",
             compare=True,
             alphas=[0.5, 0.5],
             radar_color=['#1f77b4', '#ff7f0e'],
-            ranges=3,
             show_legend=True,
             legend_loc="upper right",
             figsize=(8, 8)
