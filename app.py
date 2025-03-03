@@ -354,8 +354,8 @@ def main():
         # Création du radar avec soccerplots
         params = features
         values = [
-            player1[scaled_features].values.tolist(),
-            player2[scaled_features].values.tolist()
+            dict(zip(params, player1[scaled_features].values.tolist())),  # Format dictionnaire
+            dict(zip(params, player2[scaled_features].values.tolist()))
         ]
 
         radar = Radar()
