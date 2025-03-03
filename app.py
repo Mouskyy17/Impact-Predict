@@ -297,7 +297,6 @@ def main():
         )
 
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
-        plt.tight_layout()
         st.pyplot(fig)
 
         # Tableau comparatif
