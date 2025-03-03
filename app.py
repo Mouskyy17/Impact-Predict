@@ -283,7 +283,11 @@ def main():
             ranges=ranges,
             params=params,
             values=values,
-            title="Profil comparé (par 90 minutes)",
+            title={  
+                'title_text': "Profil comparé (par 90 minutes)",
+                'title_color': '#000000',
+                'title_fontsize': 14
+            },
             compare=True,
             alphas=[0.5, 0.5],
             radar_color=['#1f77b4', '#ff7f0e'],
