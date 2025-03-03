@@ -123,7 +123,6 @@ def main():
     
     # Calcul des scores
     df_scored = calculate_impact_scores(df)
-    filtered_df = df_scored[df_scored['Ligue'] == league]
 
     # Sidebar - Sélections
     with st.sidebar:
@@ -133,6 +132,8 @@ def main():
             ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1']
         )
         
+        filtered_df = df_scored[df_scored['Ligue'] == league]
+
         # Options d'affichage
         st.markdown("---")
         show_top5 = st.checkbox("Afficher les Top 5 par position", value=True)
