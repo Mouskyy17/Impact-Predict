@@ -354,13 +354,13 @@ def main():
         # Création du radar avec soccerplots
         params = features
         values = [
-            dict(zip(params, player1[scaled_features].values.tolist())),  # Format dictionnaire
-            dict(zip(params, player2[scaled_features].values.tolist()))
+            player1[scaled_features].values.tolist(),  # Liste directe des valeurs
+            player2[scaled_features].values.tolist()
         ]
-
+        ranges = [(0, 100)] * len(params)
         radar = Radar()
         fig = radar.plot_radar(
-            ranges=[(0, 100)] * len(params),
+            ranges=ranges,
             params=params,
             values=values,
             title="Profil comparé (par 90 minutes)",
