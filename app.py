@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from soccerplots.radar_chart import Radar
+import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
 from sklearn.preprocessing import StandardScaler
@@ -349,48 +351,31 @@ def main():
         features = position_config[position]['features']
         scaled_features = [f'Scaled {f}' for f in features]
 
-        fig = go.Figure()
-    
-        # Trace pour le joueur 1
-        fig.add_trace(go.Scatterpolar(
-            r=player1[scaled_features].values,
-            theta=features,
-            name=player1['Joueur'],
-            fill='toself',
-            line_color='#1f77b4'  # Bleu
-        ))
-    
-        # Trace pour le joueur 2
-        fig.add_trace(go.Scatterpolar(
-            r=player2[scaled_features].values,
-            theta=features,
-            name=player2['Joueur'],
-            fill='toself',
-            line_color='#ff7f0e'  # Orange
-        ))
+        # Création du radar avec soccerplots
+        params = features
+        values = [
+        player1[scaled_features].values.tolist(),
+        player2[scaled_features].values.tolist()
+        ]
 
-        # Mise en forme du radar
-        fig.update_layout(
-            polar=dict(
-                radialaxis=dict(
-                    visible=True,
-                    range=[-3, 3],
-                    tickfont=dict(size=8)
-            )),
-            legend=dict(
-                orientation="h",
-                yanchor="bottom",
-                y=1.1,
-                xanchor="center",
-                x=0.5
-            ),
-            margin=dict(l=50, r=50, t=50, b=50),
-            height=500
-        )
+        radar = Radar()
+        fig, ax = radar.plot_radar(
+        params=params,
+        values=values,
+        title="Profil comparé (par 90 minutes)",
+        compare=True,
+        alphas=[0.5, 0.5],
+        radar_color=['#1f77b4', '#ff7f0e'],
+        range_min=-3,
+        range_max=3,
+        show_legend=True,
+        legend_loc="upper right",
+        figsize=(8, 8)
+    )
 
-        # Affichage du radar
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
-        st.plotly_chart(fig, use_container_width=True)
+        plt.tight_layout()
+        st.pyplot(fig)
 
         # Tableau comparatif
         st.markdown("### 📊 Comparaison détaillée")
@@ -414,6 +399,10 @@ def main():
                 player2['Joueur']: player2['Joueur']
             }
         )
+
+# Note de bas de page
+endnote = "Source : FBref | Made by : Moubarak Issa"
+
 
 if __name__ == '__main__':
     main()
