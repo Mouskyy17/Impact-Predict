@@ -278,22 +278,26 @@ def main():
             player2[scaled_features].values.tolist()
         ]
         ranges = [(0, 100)] * len(params)
+        # Instanciation de l'objet Radar
+        radar = Radar(background_color="#121212", patch_color="#28252C", label_color="#F0FFF0", range_color="#F0FFF0")
+
         radar = Radar()
+        
+
+        # Tracé du radar
         fig, ax = radar.plot_radar(
-            ranges=ranges,
+            ranges=ranges,  # Les valeurs sont des pourcentages (0 à 100)
             params=params,
             values=values,
+            radar_color=['#9B3647', '#3282b8'],
             title={  
                 'title_text': "Profil comparé (par 90 minutes)",
                 'title_color': '#000000',
                 'title_fontsize': 14
             },
-            compare=True,
-            alphas=[0.5, 0.5],
-            radar_color=['#1f77b4', '#ff7f0e'],
-            show_legend=True,
-            legend_loc="upper right",
-            figsize=(8, 8)
+            endnote=endnote,
+            alphas=[0.55, 0.5],
+            compare=True
         )
 
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
