@@ -121,6 +121,10 @@ def calculate_impact_scores(df):
 def main():
     st.title("🔝 Analyse d'Impact des Joueurs - Top 5 Championnats 🔝")
     
+    # Calcul des scores
+    df_scored = calculate_impact_scores(df)
+    filtered_df = df_scored[df_scored['Ligue'] == league]
+
     # Sidebar - Sélections
     with st.sidebar:
         # Sélection du championnat
@@ -179,9 +183,7 @@ def main():
                 selected_players.append(player2)
                 selected_leagues.append(league2)
 
-    # Calcul des scores
-    df_scored = calculate_impact_scores(df)
-    filtered_df = df_scored[df_scored['Ligue'] == league]
+    
     
     # Affichage des top 5 par position (seulement si activé)
     if show_top5:
@@ -240,10 +242,10 @@ def main():
             (df_scored['Ligue'] == selected_leagues[1])
         ].iloc[0]
 
-#        # Vérification du même poste
-#        if player1['Position'] != player2['Position']:
-#            st.error("Les joueurs doivent avoir le même poste pour être comparés !")
-#            st.stop()
+        # Vérification du même poste
+        if player1['Position'] != player2['Position']:
+            st.error("Les joueurs doivent avoir le même poste pour être comparés !")
+            st.stop()
 
         # Création des colonnes pour les métriques
         col1, col2 = st.columns(2)
