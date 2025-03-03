@@ -278,30 +278,50 @@ def main():
             player2[scaled_features].values.tolist()
         ]
         ranges = [(0, 100)] * len(params)
+       
         # Instanciation de l'objet Radar
-        radar = Radar(background_color="#121212", patch_color="#28252C", label_color="#F0FFF0", range_color="#F0FFF0")
+        fig = go.Figure()
 
-        radar = Radar()
-        
+        # Trace pour le joueur 1
+        fig.add_trace(go.Scatterpolar(
+            r=player1[scaled_features].values,
+            theta=features,
+            name=player1['Joueur'],
+            fill='toself',
+            line_color='#1f77b4'  # Bleu
+        ))
 
-        # Tracé du radar
-        fig, ax = radar.plot_radar(
-            ranges=ranges,  # Les valeurs sont des pourcentages (0 à 100)
-            params=params,
-            values=values,
-            radar_color=['#9B3647', '#3282b8'],
-            title={  
-                'title_text': "Profil comparé (par 90 minutes)",
-                'title_color': '#000000',
-                'title_fontsize': 14
-            },
-            endnote=endnote,
-            alphas=[0.55, 0.5],
-            compare=True
+        # Trace pour le joueur 2
+        fig.add_trace(go.Scatterpolar(
+            r=player2[scaled_features].values,
+            theta=features,
+            name=player2['Joueur'],
+            fill='toself',
+            line_color='#ff7f0e'  # Orange
+        ))
+
+        # Mise en forme du radar
+        fig.update_layout(
+            polar=dict(
+                radialaxis=dict(
+                    visible=True,
+                    range=[-3, 3],
+                    tickfont=dict(size=8)
+            )),
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.1,
+                xanchor="center",
+                x=0.5
+            ),
+            margin=dict(l=50, r=50, t=50, b=50),
+            height=500
         )
 
+        # Affichage du radar
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
-        st.pyplot(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
         # Tableau comparatif
         st.markdown("### 📊 Comparaison détaillée")
