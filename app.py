@@ -220,7 +220,7 @@ def main():
                             polar=dict(
                                 radialaxis=dict(
                                     visible=True,
-                                    range=[0, 100]
+                                    range=[-10, 10]
                                 )),
                             showlegend=False,
                             height=300,
