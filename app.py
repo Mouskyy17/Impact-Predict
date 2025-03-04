@@ -296,7 +296,7 @@ def main():
             polar=dict(
                 radialaxis=dict(
                     visible=True,
-                    range=[-5, 5],
+                    range=[-7, 7],
                     tickfont=dict(size=8)
             )),
             legend=dict(
