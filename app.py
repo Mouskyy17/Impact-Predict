@@ -220,7 +220,7 @@ def main():
                             polar=dict(
                                 radialaxis=dict(
                                     visible=True,
-                                    range=[(0, 100)] * len(params)
+                                    range=[0, 100]
                                 )),
                             showlegend=False,
                             height=300,
@@ -272,12 +272,11 @@ def main():
         scaled_features = [f'Scaled {f}' for f in features]
 
         # Création du radar avec soccerplots
-        params = features
+       # params = features
         values = [
             player1[scaled_features].values.tolist(),  # Liste directe des valeurs
             player2[scaled_features].values.tolist()
         ]
-        ranges = [(0, 100)] * len(params)
        
         # Instanciation de l'objet Radar
         fig = go.Figure()
@@ -305,7 +304,7 @@ def main():
             polar=dict(
                 radialaxis=dict(
                     visible=True,
-                    range=[(0, 100)] * len(params),
+                    range=[0, 100],
                     tickfont=dict(size=8)
             )),
             legend=dict(
