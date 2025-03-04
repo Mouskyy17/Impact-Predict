@@ -271,16 +271,8 @@ def main():
         features = position_config[position]['features']
         scaled_features = [f'Scaled {f}' for f in features]
 
-        # Création du radar avec soccerplots
-       # params = features
-        values = [
-            player1[scaled_features].values.tolist(),  # Liste directe des valeurs
-            player2[scaled_features].values.tolist()
-        ]
-       
-        # Instanciation de l'objet Radar
         fig = go.Figure()
-
+    
         # Trace pour le joueur 1
         fig.add_trace(go.Scatterpolar(
             r=player1[scaled_features].values,
@@ -289,7 +281,7 @@ def main():
             fill='toself',
             line_color='#1f77b4'  # Bleu
         ))
-
+    
         # Trace pour le joueur 2
         fig.add_trace(go.Scatterpolar(
             r=player2[scaled_features].values,
@@ -304,7 +296,7 @@ def main():
             polar=dict(
                 radialaxis=dict(
                     visible=True,
-                    range=[0, 100],
+                    range=[-3, 3],
                     tickfont=dict(size=8)
             )),
             legend=dict(
@@ -317,6 +309,7 @@ def main():
             margin=dict(l=50, r=50, t=50, b=50),
             height=500
         )
+
 
         # Affichage du radar
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
