@@ -307,7 +307,8 @@ def main():
                 x=0.5
             ),
             margin=dict(l=50, r=50, t=50, b=50),
-            height=500
+            height=500,
+            endnote=endnote
         )
 
 
