@@ -191,7 +191,7 @@ def main():
     # Affichage des top 5 par position (seulement si activé)
     if show_top5:
         positions = ['Attaquant', 'Milieu', 'Défenseur']
-    
+
         for position in positions:
             st.subheader(f"Top 5 {position}")
         
@@ -199,17 +199,11 @@ def main():
             pos_df = filtered_df[filtered_df['Position'] == position] \
                 .sort_values('Impact Score', ascending=False) \
                 .head(5)
-        
-            # Affichage sous forme de tableau
-            st.dataframe(pos_df[['Joueur', 'Equipe', 'Age', 'Impact Score']]
-                         .rename(columns={'Joueur': 'Nom', 'Equipe': 'Équipe', 'Age': 'Âge', 'Impact Score': 'Score d\'Impact'}), 
-                        hide_index=True)
-        
-            # Affichage des radars en lignes
+
+            # Création d'une grille pour le tableau avec les radars
+            table_data = []
             for _, row in pos_df.iterrows():
-                st.markdown(f"### {row['Joueur']} ({row['Equipe']}, {int(row['Age'])})")
-            
-                # Radar chart
+                # Génération du radar chart pour chaque joueur
                 features = position_config[position]['features']
                 scaled_features = [f'Scaled {f}' for f in features]
 
@@ -228,12 +222,31 @@ def main():
                             range=[-10, 10]
                         )),
                     showlegend=False,
-                    height=300,
-                    width=300
+                    height=200,
+                    width=200,
+                    margin=dict(l=10, r=10, t=10, b=10)
                 )
 
-                st.plotly_chart(fig, use_container_width=True)
-                st.markdown("---")  # Ligne de séparation entre les joueurs
+                # Ajout des données au tableau
+                table_data.append({
+                    "Joueur": row["Joueur"],
+                    "Équipe": row["Equipe"],
+                    "Âge": int(row["Age"]),
+                    "Score d'Impact": row["Impact Score"],
+                    "Radar": fig  # Stockage du graphique pour affichage
+                })
+        
+            # Affichage sous forme de tableau
+            for player in table_data:
+                cols = st.columns([2, 2, 1, 3])  # Définition des largeurs des colonnes
+                cols[0].write(player["Joueur"])
+                cols[1].write(player["Équipe"])
+                cols[2].write(player["Âge"])
+                with cols[3]:
+                    st.metric("Score", f"{player['Score d\'Impact']:.2f}")
+                    st.plotly_chart(player["Radar"], use_container_width=True)
+        
+            st.markdown("---")  # Séparation entre les positions
 
     # Section de comparaison modifiée avec radar unique
     if enable_comparison and len(selected_players) == 2:
