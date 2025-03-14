@@ -191,62 +191,43 @@ def main():
     # Affichage des top 5 par position (seulement si activé)
     if show_top5:
         positions = ['Attaquant', 'Milieu', 'Défenseur']
-
-        for position in positions:
-            st.subheader(f"Top 5 {position}")
+        cols = st.columns(3)
         
-            # Sélection des meilleurs joueurs par position
-            pos_df = filtered_df[filtered_df['Position'] == position] \
-                .sort_values('Impact Score', ascending=False) \
-                .head(5)
-
-            # Création d'une grille pour le tableau avec les radars
-            table_data = []
-            for _, row in pos_df.iterrows():
-                # Génération du radar chart pour chaque joueur
-                features = position_config[position]['features']
-                scaled_features = [f'Scaled {f}' for f in features]
-
-                fig = go.Figure()
-                fig.add_trace(go.Scatterpolar(
-                    r=row[scaled_features].values,
-                    theta=features,
-                    fill='toself',
-                    line_color='blue'
-                ))
-
-                fig.update_layout(
-                    polar=dict(
-                        radialaxis=dict(
-                            visible=True,
-                            range=[-10, 10]
-                        )),
-                    showlegend=False,
-                    height=200,
-                    width=200,
-                    margin=dict(l=10, r=10, t=10, b=10)
-                )
-
-                # Ajout des données au tableau
-                table_data.append({
-                    "Joueur": row["Joueur"],
-                    "Équipe": row["Equipe"],
-                    "Âge": int(row["Age"]),
-                    "Score d'Impact": row["Impact Score"],
-                    "Radar": fig  # Stockage du graphique pour affichage
-                })
-        
-            # Affichage sous forme de tableau
-            for player in table_data:
-                cols = st.columns([2, 2, 1, 3])  # Définition des largeurs des colonnes
-                cols[0].write(player["Joueur"])
-                cols[1].write(player["Équipe"])
-                cols[2].write(player["Âge"])
-                with cols[3]:
-                    st.metric("Score", f"{player['Score d\'Impact']:.2f}")
-                    st.plotly_chart(player["Radar"], use_container_width=True)
-        
-            st.markdown("---")  # Séparation entre les positions
+        for i, position in enumerate(positions):
+            with cols[i]:
+                st.subheader(f"Top 5 {position}")
+                pos_df = filtered_df[filtered_df['Position'] == position] \
+                    .sort_values('Impact Score', ascending=False) \
+                    .head(5)
+                
+                for _, row in pos_df.iterrows():
+                    with st.expander(f"{row['Joueur']} ({row['Equipe']}, {int(row['Age'])})"):
+                        st.metric("Score d'Impact", f"{row['Impact Score']:.2f}")
+                        
+                        # Radar chart
+                        features = position_config[position]['features']
+                        scaled_features = [f'Scaled {f}' for f in features]
+                        
+                        fig = go.Figure()
+                        fig.add_trace(go.Scatterpolar(
+                            r=row[scaled_features].values,
+                            theta=features,
+                            fill='toself',
+                            line_color='blue'
+                        ))
+                        
+                        fig.update_layout(
+                            polar=dict(
+                                radialaxis=dict(
+                                    visible=True,
+                                    range=[-10, 10]
+                                )),
+                            showlegend=False,
+                            height=300,
+                            width=300
+                        )
+                        
+                        st.plotly_chart(fig, use_container_width=True)
 
     # Section de comparaison modifiée avec radar unique
     if enable_comparison and len(selected_players) == 2:
