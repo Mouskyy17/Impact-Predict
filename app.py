@@ -190,50 +190,50 @@ def main():
     
     # Affichage des top 5 par position (seulement si activé)
     if show_top5:
-    positions = ['Attaquant', 'Milieu', 'Défenseur']
+        positions = ['Attaquant', 'Milieu', 'Défenseur']
     
-    for position in positions:
-        st.subheader(f"Top 5 {position}")
+        for position in positions:
+            st.subheader(f"Top 5 {position}")
         
-        # Sélection des meilleurs joueurs par position
-        pos_df = filtered_df[filtered_df['Position'] == position] \
-            .sort_values('Impact Score', ascending=False) \
-            .head(5)
+            # Sélection des meilleurs joueurs par position
+            pos_df = filtered_df[filtered_df['Position'] == position] \
+                .sort_values('Impact Score', ascending=False) \
+                .head(5)
         
-        # Affichage sous forme de tableau
-        st.dataframe(pos_df[['Joueur', 'Equipe', 'Age', 'Impact Score']]
-                     .rename(columns={'Joueur': 'Nom', 'Equipe': 'Équipe', 'Age': 'Âge', 'Impact Score': 'Score d\'Impact'}), 
-                     hide_index=True)
+            # Affichage sous forme de tableau
+            st.dataframe(pos_df[['Joueur', 'Equipe', 'Age', 'Impact Score']]
+                         .rename(columns={'Joueur': 'Nom', 'Equipe': 'Équipe', 'Age': 'Âge', 'Impact Score': 'Score d\'Impact'}), 
+                        hide_index=True)
         
-        # Affichage des radars en lignes
-        for _, row in pos_df.iterrows():
-            st.markdown(f"### {row['Joueur']} ({row['Equipe']}, {int(row['Age'])})")
+            # Affichage des radars en lignes
+            for _, row in pos_df.iterrows():
+                st.markdown(f"### {row['Joueur']} ({row['Equipe']}, {int(row['Age'])})")
             
-            # Radar chart
-            features = position_config[position]['features']
-            scaled_features = [f'Scaled {f}' for f in features]
+                # Radar chart
+                features = position_config[position]['features']
+                scaled_features = [f'Scaled {f}' for f in features]
 
-            fig = go.Figure()
-            fig.add_trace(go.Scatterpolar(
-                r=row[scaled_features].values,
-                theta=features,
-                fill='toself',
-                line_color='blue'
-            ))
+                fig = go.Figure()
+                fig.add_trace(go.Scatterpolar(
+                    r=row[scaled_features].values,
+                    theta=features,
+                    fill='toself',
+                    line_color='blue'
+                ))
 
-            fig.update_layout(
-                polar=dict(
-                    radialaxis=dict(
-                        visible=True,
-                        range=[-10, 10]
-                    )),
-                showlegend=False,
-                height=300,
-                width=300
-            )
+                fig.update_layout(
+                    polar=dict(
+                        radialaxis=dict(
+                            visible=True,
+                            range=[-10, 10]
+                        )),
+                    showlegend=False,
+                    height=300,
+                    width=300
+                )
 
-            st.plotly_chart(fig, use_container_width=True)
-            st.markdown("---")  # Ligne de séparation entre les joueurs
+                st.plotly_chart(fig, use_container_width=True)
+                st.markdown("---")  # Ligne de séparation entre les joueurs
 
     # Section de comparaison modifiée avec radar unique
     if enable_comparison and len(selected_players) == 2:
