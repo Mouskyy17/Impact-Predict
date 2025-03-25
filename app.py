@@ -345,6 +345,8 @@ def main():
         #st.plotly_chart(fig, use_container_width=True)
         # Ajustement de la mise en page
         plt.tight_layout()
+        # Affichage du radar dans Streamlit
+        st.pyplot(fig)
 
         # Tableau comparatif
         st.markdown("### 📊 Comparaison détaillée")
