@@ -343,8 +343,8 @@ def main():
             endnote=endnote,
             alphas=[0.55, 0.5],
             compare=True,
-            figsize=(7, 7)
         )
+        fig.set_size_inches(8, 8)
 
         # Affichage du radar
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
