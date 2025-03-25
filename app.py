@@ -314,7 +314,7 @@ def main():
         endnote = "Source : FBref | Made by : Moubarak Issa"
 
 
-    # Création du radar chart
+        # Création du radar chart
         position = player1['Position']
         features = position_config[position]['features']
     
@@ -334,8 +334,8 @@ def main():
             params=features,
             values=[player1_data, player2_data],
             radar_color=['#9B3647', '#3282b8'],
-            title=f"Profil de performance - {position}",
-            endnote="Source: DataScout",
+            #title=f"Profil de performance - {position}",
+            endnote=endnote,
             alphas=[0.55, 0.5],
             compare=True
         )
