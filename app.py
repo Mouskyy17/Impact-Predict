@@ -343,7 +343,6 @@ def main():
             endnote=endnote,
             alphas=[0.55, 0.5],
             compare=True,
-            ax=ax,
             figsize=(7, 7)
         )
 
