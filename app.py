@@ -267,54 +267,84 @@ def main():
             st.metric("Score d'Impact", f"{player2['Impact Score']:.2f}")
 
         # Création du radar chart combiné
-        position = player1['Position']
-        features = position_config[position]['features']
-        scaled_features = [f'Scaled {f}' for f in features]
+        #position = player1['Position']
+        #features = position_config[position]['features']
+        #scaled_features = [f'Scaled {f}' for f in features]
 
-        fig = go.Figure()
+        #fig = go.Figure()
     
         # Trace pour le joueur 1
-        fig.add_trace(go.Scatterpolar(
-            r=player1[scaled_features].values,
-            theta=features,
-            name=player1['Joueur'],
-            fill='toself',
-            line_color='#1f77b4'  # Bleu
-        ))
+        #fig.add_trace(go.Scatterpolar(
+        #    r=player1[scaled_features].values,
+        #    theta=features,
+        #    name=player1['Joueur'],
+        #    fill='toself',
+        #    line_color='#1f77b4'  # Bleu
+        #))
     
         # Trace pour le joueur 2
-        fig.add_trace(go.Scatterpolar(
-            r=player2[scaled_features].values,
-            theta=features,
-            name=player2['Joueur'],
-            fill='toself',
-            line_color='#ff7f0e'  # Orange
-        ))
+        #fig.add_trace(go.Scatterpolar(
+        #    r=player2[scaled_features].values,
+        #    theta=features,
+        #    name=player2['Joueur'],
+        #    fill='toself',
+        #    line_color='#ff7f0e'  # Orange
+        #))
 
         # Mise en forme du radar
-        fig.update_layout(
-            polar=dict(
-                radialaxis=dict(
-                    visible=True,
-                    range=[-10, 10],
-                    tickfont=dict(size=8)
-            )),
-            legend=dict(
-                orientation="h",
-                yanchor="bottom",
-                y=1.1,
-                xanchor="center",
-                x=0.5
-            ),
-            margin=dict(l=50, r=50, t=50, b=50),
-            height=500,
-            #   endnote=endnote
+        #fig.update_layout(
+        #    polar=dict(
+        #        radialaxis=dict(
+        #            visible=True,
+        #            range=[-10, 10],
+        #            tickfont=dict(size=8)
+        #    )),
+        #    legend=dict(
+        #        orientation="h",
+        #        yanchor="bottom",
+        #        y=1.1,
+        #        xanchor="center",
+        #        x=0.5
+        #    ),
+        #    margin=dict(l=50, r=50, t=50, b=50),
+        #    height=500,
+        #)
+
+        # Note de bas de page
+        endnote = "Source : FBref | Made by : Moubarak Issa"
+
+
+    # Création du radar chart
+        position = player1['Position']
+        features = position_config[position]['features']
+    
+        player1_data = [player1[feat] for feat in features]
+        player2_data = [player2[feat] for feat in features]
+
+        # Configuration du radar
+        radar = Radar(
+            background_color="#121212",
+            patch_color="#28252C", 
+            label_color="#F0FFF0",
+            range_color="#F0FFF0"
         )
 
+        fig, ax = radar.plot_radar(
+            ranges=[(0, 100)] * len(features),
+            params=features,
+            values=[player1_data, player2_data],
+            radar_color=['#9B3647', '#3282b8'],
+            title=f"Profil de performance - {position}",
+            endnote="Source: DataScout",
+            alphas=[0.55, 0.5],
+            compare=True
+        )
 
         # Affichage du radar
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
-        st.plotly_chart(fig, use_container_width=True)
+        #st.plotly_chart(fig, use_container_width=True)
+        # Ajustement de la mise en page
+        plt.tight_layout()
 
         # Tableau comparatif
         st.markdown("### 📊 Comparaison détaillée")
@@ -338,9 +368,6 @@ def main():
                 player2['Joueur']: player2['Joueur']
             }
         )
-
-# Note de bas de page
-endnote = "Source : FBref | Made by : Moubarak Issa"
 
 
 if __name__ == '__main__':
