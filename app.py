@@ -331,7 +331,7 @@ def main():
         )
 
         # Création de la figure avec une taille réduite
-        fig, ax = plt.subplots(figsize=(8, 8))  # Ajuster la taille globale ici
+        fig, ax = plt.subplots(figsize=(7, 7))  # Ajuster la taille globale ici
 
 
         fig, ax = radar.plot_radar(
@@ -350,7 +350,7 @@ def main():
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
         #st.plotly_chart(fig, use_container_width=True)
         # Ajustement de la mise en page
-        plt.tight_layout()
+        plt.tight_layout(pad=3.0)
         # Affichage du radar dans Streamlit
         st.pyplot(fig)
 
