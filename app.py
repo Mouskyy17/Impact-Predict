@@ -326,8 +326,13 @@ def main():
             background_color="#121212",
             patch_color="#28252C", 
             label_color="#F0FFF0",
-            range_color="#F0FFF0"
+            range_color="#F0FFF0",
+            label_fontsize=10    
         )
+
+        # Création de la figure avec une taille réduite
+        fig, ax = plt.subplots(figsize=(8, 8))  # Ajuster la taille globale ici
+
 
         fig, ax = radar.plot_radar(
             ranges=[(0, 100)] * len(features),
@@ -337,7 +342,8 @@ def main():
             #title=f"Profil de performance - {position}",
             endnote=endnote,
             alphas=[0.55, 0.5],
-            compare=True
+            compare=True,
+            ax=ax
         )
 
         # Affichage du radar
