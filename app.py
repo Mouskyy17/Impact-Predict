@@ -331,7 +331,7 @@ def main():
         )
 
         # Création de la figure avec une taille réduite
-        fig, ax = plt.subplots(figsize=(7, 7))  # Ajuster la taille globale ici
+        #fig, ax = plt.subplots(figsize=(7, 7))  # Ajuster la taille globale ici
 
 
         fig, ax = radar.plot_radar(
@@ -343,7 +343,8 @@ def main():
             endnote=endnote,
             alphas=[0.55, 0.5],
             compare=True,
-            ax=ax
+            ax=ax,
+            figsize=(7, 7)
         )
 
         # Affichage du radar
