@@ -343,7 +343,7 @@ def main():
             radar_color=['red', 'blue'],
             endnote=endnote,
             alphas=[.55, .5],  # Transparence ajustée pour bien voir les deux joueurs
-            compare=False
+            compare=True
         )
 
         
