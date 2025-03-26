@@ -314,37 +314,65 @@ def main():
         endnote = "Source : FBref | Made by : Moubarak Issa"
 
 
-        # Création du radar chart
+        # Sélection des features et extraction des valeurs normalisées
         position = player1['Position']
         features = position_config[position]['features']
-    
-        player1_data = [player1[feat] for feat in features]
-        player2_data = [player2[feat] for feat in features]
 
-        # Configuration du radar
+        # Normalisation des valeurs entre 0 et 1 pour éviter des écarts excessifs
+        scaler = StandardScaler()
+        df_normalized = scaler.fit_transform(df_scored[features])
+
+        # Récupération des valeurs normalisées des joueurs
+        player1_data = df_normalized[df_scored['Joueur'] == selected_players[0]][0]
+        player2_data = df_normalized[df_scored['Joueur'] == selected_players[1]][0]
+
+        # Création du radar chart avec mplsoccer
         radar = Radar(
-            background_color="#121212",
-            patch_color="#28252C", 
-            label_color="#F0FFF0",
+            label_fontsize=12,   # Taille des labels
             range_color="#F0FFF0",
-            label_fontsize=10    
+            label_color="white",
+            patch_color="#28252C",
+            background_color="#121212"
         )
 
-        # Création de la figure avec une taille réduite
-        #fig, ax = plt.subplots(figsize=(7, 7))  # Ajuster la taille globale ici
-
-
+        # Création de la figure avec une taille ajustée
         fig, ax = radar.plot_radar(
-            ranges=[(0, 100)] * len(features),
+            ranges=[(0, 1)] * len(features),  # Toutes les stats normalisées entre 0 et 1
             params=features,
             values=[player1_data, player2_data],
             radar_color=['#9B3647', '#3282b8'],
-            #title=f"Profil de performance - {position}",
-            endnote=endnote,
-            alphas=[0.55, 0.5],
-            compare=True,
+            title=f"Comparaison de {player1['Joueur']} vs {player2['Joueur']}",
+            endnote=endnote",
+            alphas=[0.6, 0.5],  # Transparence ajustée pour bien voir les deux joueurs
+            compare=True
         )
+
+        # Ajustement du layout et affichage
         fig.set_size_inches(8, 8)
+        plt.tight_layout(pad=3.0)
+        st.pyplot(fig)
+        # Configuration du radar
+        #radar = Radar(
+        #    background_color="#121212",
+        #    patch_color="#28252C", 
+        #    label_color="#F0FFF0",
+        #    range_color="#F0FFF0",
+        #    label_fontsize=10    
+        #)
+
+        
+
+        #fig, ax = radar.plot_radar(
+        #    ranges=[(0, 100)] * len(features),
+        #    params=features,
+        #    values=[player1_data, player2_data],
+        #    radar_color=['#9B3647', '#3282b8'],
+            #title=f"Profil de performance - {position}",
+        #    endnote=endnote,
+        #    alphas=[0.55, 0.5],
+        #    compare=True,
+        #)
+        #fig.set_size_inches(8, 8)
 
         # Affichage du radar
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
