@@ -346,10 +346,7 @@ def main():
             compare=True
         )
 
-        # Ajustement du layout et affichage
-        fig.set_size_inches(8, 8)
-        plt.tight_layout(pad=3.0)
-        st.pyplot(fig)
+        
         # Configuration du radar
         #radar = Radar(
         #    background_color="#121212",
@@ -375,12 +372,11 @@ def main():
 
         # Affichage du radar
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
-        #st.plotly_chart(fig, use_container_width=True)
-        # Ajustement de la mise en page
+        # Ajustement du layout et affichage
+        fig.set_size_inches(8, 8)
         plt.tight_layout(pad=3.0)
-        # Affichage du radar dans Streamlit
         st.pyplot(fig)
-
+        
         # Tableau comparatif
         st.markdown("### 📊 Comparaison détaillée")
         comparison_df = pd.DataFrame({
