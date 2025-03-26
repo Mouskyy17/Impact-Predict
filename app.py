@@ -341,7 +341,6 @@ def main():
             params=features,
             values=[player1_data, player2_data],
             radar_color=['#9B3647', '#3282b8'],
-            title=f"Comparaison de {player1['Joueur']} vs {player2['Joueur']}",
             endnote=endnote,
             alphas=[0.6, 0.5],  # Transparence ajustée pour bien voir les deux joueurs
             compare=True
