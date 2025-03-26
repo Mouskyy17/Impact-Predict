@@ -340,7 +340,7 @@ def main():
             ranges=[(0, 1)] * len(features),  # Toutes les stats normalisées entre 0 et 1
             params=features,
             values=[player1_data, player2_data],
-            radar_color=[('#9B3647', '#9B3647'), ('#3282b8', '#3282b8')],
+            radar_color=['red', 'blue'],
             endnote=endnote,
             alphas=[0.6, 0.4],  # Transparence ajustée pour bien voir les deux joueurs
             compare=True
