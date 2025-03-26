@@ -342,7 +342,7 @@ def main():
             values=[player1_data, player2_data],
             radar_color=['#9B3647', '#3282b8'],
             endnote=endnote,
-            alphas=[0.6, 0.5],  # Transparence ajustée pour bien voir les deux joueurs
+            alphas=[.75, .6],  # Transparence ajustée pour bien voir les deux joueurs
             compare=True
         )
 
@@ -376,7 +376,7 @@ def main():
         fig.set_size_inches(8, 8)
         plt.tight_layout(pad=3.0)
         st.pyplot(fig)
-        
+
         # Tableau comparatif
         st.markdown("### 📊 Comparaison détaillée")
         comparison_df = pd.DataFrame({
