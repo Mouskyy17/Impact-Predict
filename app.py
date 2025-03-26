@@ -373,8 +373,8 @@ def main():
         # Affichage du radar
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
         # Ajustement du layout et affichage
-        fig.set_size_inches(3, 3)
-        plt.tight_layout()
+        fig.set_size_inches(5, 5)
+        plt.tight_layout(pad=5.0)
         st.pyplot(fig)
 
         # Tableau comparatif
