@@ -318,8 +318,11 @@ def main():
         position = player1['Position']
         features = position_config[position]['features']
     
-        player1_data = [player1[feat] for feat in features]
-        player2_data = [player2[feat] for feat in features]
+        # Normalisation des valeurs sur 100
+        max_values = df[features].max()  # On utilise le max du dataset complet
+        player1_data = [(player1[feat] / max_values[feat]) * 100 for feat in features]
+        player2_data = [(player2[feat] / max_values[feat]) * 100 for feat in features]
+
 
         # Configuration du radar
         radar = Radar(
