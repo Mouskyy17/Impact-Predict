@@ -318,11 +318,13 @@ def main():
         position = player1['Position']
         features = position_config[position]['features']
     
-        # Normalisation des valeurs sur 100
-        max_values = df[features].max()  # On utilise le max du dataset complet
-        player1_data = [(player1[feat] / max_values[feat]) * 100 for feat in features]
-        player2_data = [(player2[feat] / max_values[feat]) * 100 for feat in features]
+        # Normalisation des valeurs entre 0 et 1 pour éviter des écarts excessifs
+        scaler = StandardScaler()
+        df_normalized = scaler.fit_transform(df_scored[features])
 
+        # Récupération des valeurs normalisées des joueurs
+        player1_data = df_normalized[df_scored['Joueur'] == selected_players[0]][0]
+        player2_data = df_normalized[df_scored['Joueur'] == selected_players[1]][0]
 
         # Configuration du radar
         radar = Radar(
@@ -332,10 +334,6 @@ def main():
             range_color="#F0FFF0",
             label_fontsize=10    
         )
-
-        # Création de la figure avec une taille réduite
-        #fig, ax = plt.subplots(figsize=(7, 7))  # Ajuster la taille globale ici
-
 
         fig, ax = radar.plot_radar(
             ranges=[(0, 100)] * len(features),
@@ -354,8 +352,6 @@ def main():
         #st.plotly_chart(fig, use_container_width=True)
         # Ajustement de la mise en page
         plt.tight_layout(pad=3.0)
-        # Affichage du radar dans Streamlit
-        st.pyplot(fig)
 
         # Tableau comparatif
         st.markdown("### 📊 Comparaison détaillée")
