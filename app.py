@@ -349,7 +349,7 @@ def main():
 
         # Affichage du radar
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig)
         # Ajustement de la mise en page
         plt.tight_layout(pad=3.0)
 
