@@ -347,15 +347,10 @@ def main():
         )
 
         # Ajustement du layout et affichage
-        fig.set_size_inches(6, 6)
+        fig.set_size_inches(8, 8)
         plt.tight_layout(pad=3.0)
         st.pyplot(fig)
-        # Affichage du radar
-        st.markdown("### 📊 Profil comparé (par 90 minutes)")
-        #st.plotly_chart(fig, use_container_width=True)
-        # Ajustement de la mise en page
-        #plt.tight_layout()
-
+       
         # Tableau comparatif
         st.markdown("### 📊 Comparaison détaillée")
         comparison_df = pd.DataFrame({
