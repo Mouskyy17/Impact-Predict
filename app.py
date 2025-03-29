@@ -318,13 +318,8 @@ def main():
         position = player1['Position']
         features = position_config[position]['features']
     
-        # Normalisation des valeurs entre 0 et 1 pour éviter des écarts excessifs
-        scaler = StandardScaler()
-        df_normalized = scaler.fit_transform(df_scored[features])
-
-        # Récupération des valeurs normalisées des joueurs
-        player1_data = df_normalized[df_scored['Joueur'] == selected_players[0]][0]
-        player2_data = df_normalized[df_scored['Joueur'] == selected_players[1]][0]
+        player1_data = [player1[feat] for feat in features]
+        player2_data = [player2[feat] for feat in features]
 
         # Configuration du radar
         radar = Radar(
@@ -345,7 +340,7 @@ def main():
             alphas=[0.55, 0.5],
             compare=True,
         )
-        fig.set_size_inches(8, 8)
+        #fig.set_size_inches(8, 8)
 
         # Affichage du radar
         st.markdown("### 📊 Profil comparé (par 90 minutes)")
