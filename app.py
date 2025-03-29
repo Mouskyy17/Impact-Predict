@@ -328,7 +328,7 @@ def main():
 
         # Création du radar chart avec mplsoccer
         radar = Radar(
-            label_fontsize=6,   # Taille des labels
+            label_fontsize=4,   # Taille des labels
             range_color="#F0FFF0",
             label_color="white",
             patch_color="#28252C",
