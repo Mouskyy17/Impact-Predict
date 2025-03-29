@@ -328,7 +328,7 @@ def main():
 
         # Création du radar chart avec mplsoccer
         radar = Radar(
-            label_fontsize=12,   # Taille des labels
+            label_fontsize=8,   # Taille des labels
             range_color="#F0FFF0",
             label_color="white",
             patch_color="#28252C",
@@ -337,7 +337,7 @@ def main():
 
         # Création de la figure avec une taille ajustée
         fig, ax = radar.plot_radar(
-            ranges=[(0, 1)] * len(features),  # Toutes les stats normalisées entre 0 et 1
+            ranges=[(0, 100)] * len(features),  # Toutes les stats normalisées entre 0 et 1
             params=features,
             values=[player1_data, player2_data],
             radar_color=['#9B3647', '#3282b8'],
