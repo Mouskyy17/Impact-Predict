@@ -349,7 +349,7 @@ def main():
         
 
         # Ajustement du layout et affichage
-        fig.set_size_inches(8, 8)
+        fig.set_size_inches(8, 7)
         plt.tight_layout(pad=2.0)
         st.pyplot(fig)
        
