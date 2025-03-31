@@ -357,7 +357,6 @@ def main():
             bbox_to_anchor=(1.25, 1),  # Ajustez ces valeurs au besoin
             fontsize=8,
             frameon=False,
-            prop={'color': 'white'}  
         )
 
         # Ajustement du layout et affichage
