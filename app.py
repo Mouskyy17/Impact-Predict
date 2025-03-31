@@ -349,7 +349,7 @@ def main():
         # Ajout de la légende personnalisée
         labels = [player1['Joueur'], player2['Joueur']]
         colors = ['#9B3647', '#3282b8']
-        patches = [plt.Rectangle((0,0),1,1, color=colors[i], ec="black") for i in range(2)]
+        patches = [plt.Rectangle((0,0),1,1, color=colors[i], ec="white") for i in range(2)]
         ax.legend(
             handles=patches,
             labels=labels,
