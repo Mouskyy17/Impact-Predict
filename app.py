@@ -326,9 +326,9 @@ def main():
         player1_data = df_normalized[df_scored['Joueur'] == selected_players[0]][0]
         player2_data = df_normalized[df_scored['Joueur'] == selected_players[1]][0]
 
-        # Création du radar chart avec mplsoccer
+                # Création du radar chart avec mplsoccer
         radar = Radar(
-            label_fontsize=4,   # Taille des labels
+            label_fontsize=4,   
             range_color="#F0FFF0",
             label_color="white",
             patch_color="#28252C",
@@ -337,17 +337,30 @@ def main():
 
         # Création de la figure avec une taille ajustée
         fig, ax = radar.plot_radar(
-            ranges=[(0, 1)] * len(features),  # Toutes les stats normalisées entre 0 et 1
+            ranges=[(0, 1)] * len(features),  
             params=features,
             values=[player1_data, player2_data],
             radar_color=['#9B3647', '#3282b8'],
             endnote=endnote,
-            alphas=[0.6, 0.4],  # Transparence ajustée pour bien voir les deux joueurs
+            alphas=[0.6, 0.4],
             compare=True
         )
 
+        # Ajout de la légende personnalisée
+        labels = [player1['Joueur'], player2['Joueur']]
+        colors = ['#9B3647', '#3282b8']
+        patches = [plt.Rectangle((0,0),1,1, color=colors[i], ec="black") for i in range(2)]
+        ax.legend(
+            handles=patches,
+            labels=labels,
+            loc='upper right',
+            bbox_to_anchor=(1.25, 1),  # Ajustez ces valeurs au besoin
+            fontsize=8,
+            frameon=False
+        )
+
         # Ajustement du layout et affichage
-        fig.set_size_inches(5, 5)
+        fig.set_size_inches(7, 5)  # Légèrement agrandi pour la légende
         plt.tight_layout(pad=2.0)
         st.pyplot(fig)
        
